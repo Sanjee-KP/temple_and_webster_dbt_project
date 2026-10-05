@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: fct_conversion_funnel
+    description: Data to track customer conversion funnel ready for BI and analytics.
+    columns:
+      - name: event_date
+        description: The date when the event occurred.
+        data_tests:
+          - not_null
+      - name: device
+        description: The device used for the event.
+        data_tests:
+          - not_null
+      - name: country
+        description: The country that the event relates to.
+        data_tests:
+          - not_null
+      - name: customer_type
+        description: Whether the customer is retail (B2C) or Trade (B2B).
+        data_tests:
+          - not_null
+      - name: event_name
+        description: Type of event.
+        data_tests:
+          - not_null
+      - name: session_count
+        description: The number of sessions for the given date and event.
+        data_tests:
+          - not_null
+      - name: customer_count
+        description: The number of unique customers for the given date and event.
+        data_tests:
+          - not_null

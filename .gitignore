@@ -1,0 +1,14 @@
+# dbt artifacts
+target/
+dbt_packages/
+logs/
+
+# Local credentials and environment
+profiles.yml
+.env
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]

@@ -1,0 +1,95 @@
+version: 2
+
+sources:
+  - name: temple_and_webster
+    description: Raw data from the source model.
+    database: temple_and_webster
+    schema: raw_data
+    tables:
+      - name: tblEvent
+      - name: tblOrder
+      - name: tblOrderProduct
+
+models:
+  - name: stg_events
+    description: Cleaned and transformed events data from the source model.
+    columns:
+      - name: event_id
+        description: Unique identifier for every click on the website.
+        data_tests:
+          - not_null
+          - unique
+      - name: event_datetime
+        description: The timestamp when the user performed an action localized to AEST in datetime format.
+        data_tests:
+          - not_null
+      - name: session_id
+        description: Unique identifier for each session.
+        data_tests:
+          - not_null
+      - name: customer_id
+        description: Unique identifier for each customer.
+        data_tests:
+          - not_null
+      - name: event_name
+        description: Type of event.
+        data_tests:
+          - not_null # this could be null depending on source data quality, but for the purpose of this project, we will assume it is not null
+      - name: device
+        description: Device used for the event.
+        data_tests:
+          - not_null # this could be null depending on source data quality, but for the purpose of this project, we will assume it is not null
+      - name: product_id
+        description: ID for the product, also known as SKU; (only present for product-level events).
+      - name: product_category
+        description: Category that the product belongs to (only present for product-level events).
+      - name: country
+        description: Country that the event relates to.
+      - name: customer_type
+        description: Whether the customer is retail (B2C) or Trade (B2B).
+
+  - name: stg_orders
+    description: Cleaned and transformed orders data from the source model.
+    columns:
+      - name: order_id
+        description: Unique identifier for every order on the website.
+        data_tests:
+          - not_null
+          - unique
+      - name: order_datetime
+        description: The timestamp when the user placed an order localized to AEST in datetime format.
+        data_tests:
+          - not_null
+      - name: customer_id
+        description: Unique identifier for each customer.
+        data_tests:
+          - not_null
+      - name: payment_type
+        description: Type of payment used for the order.
+        data_tests:
+          - not_null # this could be null depending on source data quality, but for the purpose of this project, we will assume it is not null
+      - name: gift_card_order_product_id
+        description: Unique identifier for the gift card order product.
+      - name: source
+        description: The Channel that the customer entered the website through, e.g. Facebook, Google...
+
+  - name: stg_order_products
+    description: Cleaned and transformed orders data from the source model.
+    columns:
+      - name: order_product_id
+        description: Unique identifier for every order product.
+        data_tests:
+          - not_null
+          - unique
+      - name: order_id
+        description: Unique identifier for every order on the website.
+        data_tests:
+          - not_null
+      - name: product_sku
+        description: The SKU of the product.
+        data_tests:
+          - not_null # this could be null depending on source data quality, but for the purpose of this project, we will assume it is not null
+      - name: amount
+        description: Amount in dollars that the client paid for the product in the order.
+        data_tests:
+          - not_null # this could be null depending on source data quality, but for the purpose of this project, we will assume it is not null

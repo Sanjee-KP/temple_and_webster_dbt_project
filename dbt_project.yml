@@ -1,0 +1,23 @@
+name: temple_and_webster
+version: '1.0.0'
+config-version: 2
+
+profile: temple_and_webster
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  temple_and_webster:
+    staging:
+      +materialized: view
+    analytics:
+      +materialized: table

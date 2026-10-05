@@ -1,0 +1,12 @@
+temple_and_webster:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('DBT_BIGQUERY_PROJECT') }}"
+      dataset: "{{ env_var('DBT_BIGQUERY_DATASET', 'dbt_dev') }}"
+      location: "{{ env_var('DBT_BIGQUERY_LOCATION', 'Sydney/Australia') }}"
+      threads: 4
+      job_execution_timeout_seconds: 300
+      priority: interactive
