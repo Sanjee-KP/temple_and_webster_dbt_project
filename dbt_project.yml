@@ -15,6 +15,8 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+# Job schedule will be set up to run the staging models first, followed by the analytics models daily.
+# The staging models will be materialized as views, while the analytics models will be materialized as tables.
 models:
   temple_and_webster:
     staging:
