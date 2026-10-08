@@ -30,6 +30,6 @@ group by
 {% if is_incremental() %}
 
     -- Captures new data and late-arriving records within a specific window
-    where event_date >= date_sub(current_date(), interval 2 day)
+    where event_date >= date_sub(current_date(), interval 3 day)
 
 {% endif %}
