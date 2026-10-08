@@ -1,6 +1,11 @@
 {{
     config(
-        materialized='incremental'
+        materialized = 'incremental',
+        incremental_strategy = 'insert_overwrite',
+        partition_by = {
+            "field": "event_date",
+            "data_type": "date"
+        }
     )
 }}
 
@@ -17,16 +22,14 @@ from
     {{ ref('stg_events') }} e
 
 where
-    lower(e.event_name) = 'product page view'
-    and lower(e.event_name) = 'add to cart'
-    and lower(e.event_name) = 'view basket'
-    and lower(e.event_name) = 'order receipt'
+    lower(e.event_name) in ('product page view', 'add to cart', 'view basket', 'order receipt')
 
 group by
     1, 2, 3, 4, 5
 
 {% if is_incremental() %}
 
-where date(e.event_datetime) >= (select max(date(e.event_datetime)) from {{ this }} )
+    -- Captures new data and late-arriving records within a specific window
+    where event_date >= date_sub(current_date(), interval 2 day)
 
 {% endif %}
